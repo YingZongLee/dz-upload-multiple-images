@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <title>Home Page</title>
+    <link rel="icon" type="image/png" href="/public/favicon.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha512-aEe/ZxePawj0+G2R+AaIxgrQuKT68I28qh+wgLrcAJOz3rxCP+TwrK5SPN+E5I+1IQjNtcfvb96HDagwrKRdBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.js" integrity="sha512-llCHNP2CQS+o3EUK2QFehPlOngm8Oa7vkvdUpEFN71dVOf3yAj9yMoPdS5aYRTy8AEdVtqUBIsVThzUSggT0LQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/fontawesome.min.js" integrity="sha512-KCwrxBJebca0PPOaHELfqGtqkUlFUCuqCnmtydvBSTnJrBirJ55hRG5xcP4R9Rdx9Fz9IF3Yw6Rx40uhuAHR8Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row text-center mt-4">
+            <h1>Upload Multiple Files in One Request</h1>
+        </div>
+        <div id="success-message" class="alert alert-success d-none" role="alert"></div>
+        <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="card-body">
+                <div class="mb-4"><div class="dropzone dz-clickable" id="dz" data-url="/upload"></div></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class='col'>
+                <div class="form-group">
+                    <div class='input-group date' id='dpStart'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class='col'>
+                <div class="form-group">
+                    <div class='input-group date' id='dpEnd'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="d-flex justify-content-center mt-4"><button class="btn btn-secondary btn-sm" id="fileUpload">UPLOAD</button></div>
+        </div>
+
+    </div>
+
+    <script>
+        (function($) {
+            'use strict';
+            const $dz = $('#dz');
+            const $error = $('#error-message');
+            const $success = $('#success-message');
+            Dropzone.autoDiscover = false;
+            $dz.dropzone({
+                url: $dz.data('url'),
+                acceptedFiles: 'image/*',
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                parallelUploads: 6,
+                maxFiles: 6,
+                addRemoveLinks: true,
+                dictDefaultMessage: 'Upload Images',
+                dictRemoveFile: 'Remove Images',
+                dictMaxFilesExceeded: 'Maximum number of images exceeded: 6',
+                dictSetPrimary: 'Set Primary',
+                init: function() {
+                    let radioChangeEvent, radioElement, acceptedFiles, i;
+                    this.on('addedfile', file => {
+                        acceptedFiles = this.getAcceptedFiles();
+                        i = acceptedFiles.length;
+                        if(this.options.dictSetPrimary) {
+                            let inputString = `<div class="form-check"><input class="form-check-input" type="radio" name="setPrimary" id="${file.upload.uuid}"><label class="form-check-label" for="${file.upload.uuid}">${this.options.dictSetPrimary}</label></div>`;
+                            file.previewElement.appendChild(Dropzone.createElement(inputString));
+                            file.isPrimary = false;
+                        }
+                        radioChangeEvent = (function() {
+                            return function() {
+                                file.isPrimary = true;
+                            }
+                        })();
+                        if(acceptedFiles.length < this.options.maxFiles) {
+                            radioElement = file.previewElement.querySelector("input[type=radio][name=setPrimary]");
+                            radioElement.addEventListener('change', radioChangeEvent)
+                        }
+                    })
+                    this.on('error', (file, message) => {
+                        if(message) {
+                            $error.text(message);
+                            $error.removeClass('d-none');
+                        }
+                        if(!$error.hasClass('d-none')) {
+                            setTimeout(function() {
+                                $error.addClass('d-none');
+                            }, 5000);
+                        }
+                    });
+                    this.on('maxfilesexceeded', file => this.removeFile(file));
+                    this.on('sendingmultiple', (files, xhr, formData) => {
+                        const $dpStart = $('#dpStart');
+                        const $dpEnd = $('#dpEnd');
+                        let i, isPrimary ;
+                        if(this.options.dictSetPrimary) {
+                            for(i = 0; i < files.length ; i++) {
+                                if(files[i].isPrimary) {
+                                    isPrimary = this._getParamName(i);                          
+                                }
+                            }
+                            formData.append("isPrimary", isPrimary ? isPrimary : this._getParamName(0));
+                        }
+                        if($dpStart.data('DateTimePicker').date()) {
+                            formData.append('startDate', $dpStart.data('DateTimePicker').date().format('YYYY-MM-DD HH:mm:ss'));
+                        }
+                        if($dpEnd.data('DateTimePicker').date()) {
+                            formData.append('endDate', $dpEnd.data('DateTimePicker').date().format('YYYY-MM-DD HH:mm:ss'));
+                        }
+                    })
+                    this.on('successmultiple', (files, responseText) => {
+                        $success.text(responseText.data);
+                        $success.removeClass('d-none');
+                        setTimeout(function() {
+                            $success.addClass('d-none');
+                        }.bind(this), 5000);
+                    });
+                    $('#fileUpload').on('click', () => this.processQueue());
+                },
+            });
+        }.apply(this, [jQuery]));
+
+        (function($) {
+            'use strict';
+            const $dpStart = $('#dpStart');
+            const $dpEnd = $('#dpEnd');
+            const icons = {
+                time: "fas fa-clock",
+                date: "fas fa-calendar",
+                up: "fas fa-arrow-up",
+                down: "fas fa-arrow-down"
+            }
+            $dpStart.datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss',
+                sideBySide: true,
+                icons: icons
+            });
+            $dpEnd.datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss',
+                sideBySide: true,
+                icons: icons,
+                useCurrent: false
+            });
+            $dpStart.on('dp.change', function(e) {
+                $dpEnd.data('DateTimePicker').minDate(e.date);
+            });
+            $dpEnd.on('dp.change', function (e) {
+                $dpStart.data('DateTimePicker').maxDate(e.date);
+            });
+        }.apply(this, [jQuery]));
+    </script>
+</body>
+</html>
