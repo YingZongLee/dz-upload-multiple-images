@@ -2,6 +2,6 @@ version: '3.8'
 services:
     webapp:
         container_name: webapp
-        image: dz-upload-multiple-images:1.0
+        image: dz-upload-multiple-images:${TAG}
         ports:
             - "3000:3000"
